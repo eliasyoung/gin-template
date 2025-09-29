@@ -1,0 +1,54 @@
+version: "1.0.0"
+name: gin-template-dev-services
+
+services:
+  db:
+    container_name: gin_template_db
+    image: postgres:18-alpine
+    restart: always
+    env_file: .env
+    environment:
+      POSTGRES_DB: ${APP_DB_NAME}
+      POSTGRES_USER: ${APP_DB_USER}
+      POSTGRES_PASSWORD: ${APP_DB_PASSWORD}
+      # PGDATA: /var/lib/postgresql/data
+      PGDATA: /var/lib/postgresql/18/docker #for postgres 18
+      PGPORT: ${APP_DB_PORT}
+    ports:
+      - "${APP_DB_PORT}:${APP_DB_PORT}"
+    volumes:
+      # - db-data:/var/lib/postgresql/data
+      - db-data:/var/lib/postgresql #for postgres 18
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "pg_isready",
+          "-U",
+          "${APP_DB_USER}",
+          "-d",
+          "${APP_DB_NAME}",
+          "-h",
+          "localhost",
+        ]
+      interval: 5s
+      retries: 5
+
+  cache:
+    container_name: gin_template_cache
+    image: redis:8.2.1-alpine
+    restart: always
+    env_file: .env
+    command: redis-server --port "${APP_CACHE_PORT}" --requirepass "${APP_CACHE_PASSWORD}" --save "900 1" --save "300 10" --appendonly yes
+    # command: valkey-server --save 60 1 --loglevel warning --port ${CACHE_PORT}
+    volumes:
+      - cache-data:/data
+    ports:
+      - "${APP_CACHE_PORT}:${APP_CACHE_PORT}"
+    # expose:
+    #   - "${CACHE_PORT}/tcp"
+
+volumes:
+  db-data:
+  cache-data:
+    driver: local
