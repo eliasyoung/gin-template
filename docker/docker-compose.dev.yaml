@@ -4,7 +4,7 @@ name: gin-template-dev-services
 services:
   db:
     container_name: gin_template_db
-    image: postgres:18-alpine
+    image: postgres:18-bookworm
     restart: always
     env_file: .env
     environment:
@@ -38,7 +38,7 @@ services:
 
   cache:
     container_name: gin_template_cache
-    image: redis:8.2.1-alpine
+    image: redis:8-bookworm
     restart: always
     env_file: .env
     command: redis-server --port "${APP_CACHE_PORT}" --requirepass "${APP_CACHE_PASSWORD}" --save "900 1" --save "300 10" --appendonly yes
