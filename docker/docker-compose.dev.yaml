@@ -18,7 +18,9 @@ services:
       - "${APP_DB_PORT}:${APP_DB_PORT}"
     volumes:
       # - db-data:/var/lib/postgresql/data
-      - db-data:/var/lib/postgresql #for postgres 18
+      # - db-data:/var/lib/postgresql # for postgres 18 using docker volume
+      - ./postgres_data:/var/lib/postgresql # for postgres 18
+
     healthcheck:
       test:
         [
@@ -42,13 +44,14 @@ services:
     command: redis-server --port "${APP_CACHE_PORT}" --requirepass "${APP_CACHE_PASSWORD}" --save "900 1" --save "300 10" --appendonly yes
     # command: valkey-server --save 60 1 --loglevel warning --port ${CACHE_PORT}
     volumes:
-      - cache-data:/data
+      # - cache-data:/data # use docker volume
+      - ./redis_data:/data
     ports:
       - "${APP_CACHE_PORT}:${APP_CACHE_PORT}"
     # expose:
     #   - "${CACHE_PORT}/tcp"
-
-volumes:
-  db-data:
-  cache-data:
-    driver: local
+# docker volume
+# volumes:
+#   db-data:
+#   cache-data:
+#     driver: local

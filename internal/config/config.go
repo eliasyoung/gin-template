@@ -38,7 +38,7 @@ type DBConfig struct {
 
 type ServerConfig struct {
 	PORT string `koanf:"server_port" validate:"required"`
-	Env  string `koanf:"server_env" validate:"required"`
+	MODE string `koanf:"server_mode" validate:"required"`
 }
 
 func Load() (*Config, error) {

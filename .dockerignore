@@ -1,0 +1,36 @@
+# Git and IDE specific files
+.git
+.vscode
+.idea
+.gitignore
+
+# Local environment files (should be injected at runtime, not built-in)
+.env
+*/.env
+
+# Go specific files
+*.log
+logs/
+
+# Test files
+*_test.go
+
+# Local binaries
+main
+app
+
+# OS specific files
+.DS_Store
+
+# Docker files
+Dockerfile
+docker-compose.yaml
+docker-compose.prod.yaml
+docker-compose.dev.yaml
+
+
+# Documentation
+README.md
+
+# Makefile
+Makefile
