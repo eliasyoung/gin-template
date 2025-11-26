@@ -27,3 +27,6 @@ exports/*
 nohup.out
 
 # build binary
+
+docker/postgres_data/
+docker/redis_data/

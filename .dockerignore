@@ -27,6 +27,7 @@ Dockerfile
 docker-compose.yaml
 docker-compose.prod.yaml
 docker-compose.dev.yaml
+docker/
 
 
 # Documentation
