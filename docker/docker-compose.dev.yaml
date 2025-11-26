@@ -41,7 +41,15 @@ services:
     image: redis:8-bookworm
     restart: always
     env_file: .env
-    command: redis-server --port "${APP_CACHE_PORT}" --requirepass "${APP_CACHE_PASSWORD}" --save "900 1" --save "300 10" --appendonly yes
+    command: >
+      redis-server
+      --port "${APP_CACHE_PORT}"
+      --requirepass "${APP_CACHE_PASSWORD}"
+      --save "900 1"
+      --save "300 10"
+      --appendonly yes
+      --maxmemory "${APP_CACHE_MAXMEMORY:-512mb}"
+      --maxmemory-policy "${APP_CACHE_POLICY:-allkeys-lru}"
     # command: valkey-server --save 60 1 --loglevel warning --port ${CACHE_PORT}
     volumes:
       # - cache-data:/data # use docker volume
