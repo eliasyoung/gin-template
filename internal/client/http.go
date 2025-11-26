@@ -49,7 +49,7 @@ func (hc *HttpClient) DoGetRequest(url string, headerMap map[string]string) ([]b
 	defer resp.Body.Close()
 
 	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
-		return nil, resp.StatusCode, fmt.Errorf("GET request failed: %d", resp.StatusCode)
+		return nil, resp.StatusCode, fmt.Errorf("GET request failed with http status code : %d", resp.StatusCode)
 	}
 
 	bodyBytes, err := io.ReadAll(resp.Body)
@@ -79,7 +79,7 @@ func (hc *HttpClient) DoGetRequestWithCtx(ctx context.Context, url string, heade
 	defer resp.Body.Close()
 
 	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
-		return nil, resp.StatusCode, fmt.Errorf("GET request failed: %d", resp.StatusCode)
+		return nil, resp.StatusCode, fmt.Errorf("GET request failed with http status code: %d", resp.StatusCode)
 	}
 
 	bodyBytes, err := io.ReadAll(resp.Body)
@@ -109,7 +109,7 @@ func (hc *HttpClient) DoPostRequest(url string, body []byte, headerMap map[strin
 	defer resp.Body.Close()
 
 	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
-		return nil, resp.StatusCode, fmt.Errorf("POST request failed: %d", resp.StatusCode)
+		return nil, resp.StatusCode, fmt.Errorf("POST request failed with http status code: %d", resp.StatusCode)
 	}
 
 	bodyBytes, err := io.ReadAll(resp.Body)
@@ -139,7 +139,7 @@ func (hc *HttpClient) DoPostRequestWithCtx(ctx context.Context, url string, body
 	defer resp.Body.Close()
 
 	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
-		return nil, resp.StatusCode, fmt.Errorf("POST request failed: %d", resp.StatusCode)
+		return nil, resp.StatusCode, fmt.Errorf("POST request failed with http status code: %d", resp.StatusCode)
 	}
 
 	bodyBytes, err := io.ReadAll(resp.Body)
